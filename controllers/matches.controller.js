@@ -4,13 +4,26 @@ const calculatePriority = require("../utiils/prioritizeMatches");
 
 async function getPriorityMatches(req, res) {
   // filter by showInApp must be `true`
-  let matches = await Match.find({ showInApp: true });
+  let matches = await Match.find({ showInApp: true }).lean();
 
   matches = matches
     // sort by prioritize matches :
     // calculatePriority fn returns priority
     // range between 0 to 1
-    .sort((a, b) => calculatePriority(b) - calculatePriority(a))
+    .sort((a, b) => {
+      const pB = calculatePriority(b);
+      const pA = calculatePriority(a);
+
+      return pB - pA;
+    })
+    .map((a) => {
+      const p = calculatePriority(a);
+
+      return {
+        ...a,
+        priority: p,
+      };
+    })
 
     // Limit to top 6 matches
     .slice(0, 6);

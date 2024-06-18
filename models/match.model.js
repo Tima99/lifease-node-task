@@ -23,10 +23,14 @@ const matchSchema = new Schema({
 
   teams: {
     a: {
-      name: String,
+      name: {
+        type: mongoose.Schema.ObjectId
+    },
     },
     b: {
-      name: String,
+      name: {
+        type: mongoose.Schema.ObjectId
+    },
     },
   },
 
@@ -45,6 +49,7 @@ const matchSchema = new Schema({
     enum: ["men", "women"],
   },
   key: String,
+  priority: Number
 });
 
 const Match = mongoose.model("matches", matchSchema);

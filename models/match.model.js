@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
+const FORMAT_ENUMS = ["t20", "one-day"];
+const STATUS_ENUMS = ["notstarted", "started", "completed"];
+const GENDER_ENUMS = ["men", "women"];
+
 const matchSchema = new Schema({
   name: {
     type: String,
@@ -24,34 +28,39 @@ const matchSchema = new Schema({
   teams: {
     a: {
       name: {
-        type: mongoose.Schema.ObjectId
-    },
+        type: String,
+      },
     },
     b: {
       name: {
-        type: mongoose.Schema.ObjectId
-    },
+        type: String,
+      },
     },
   },
 
   venue: String,
   format: {
     type: String,
-    enum: ["t20", "one-day"],
+    enum: FORMAT_ENUMS,
   },
   status: {
     type: String,
-    enum: ["notstarted", "started", "completed"],
+    enum: STATUS_ENUMS,
   },
   showInApp: Boolean,
   gender: {
     type: String,
-    enum: ["men", "women"],
+    enum: GENDER_ENUMS,
   },
   key: String,
-  priority: Number
+  priority: Number,
 });
 
 const Match = mongoose.model("matches", matchSchema);
 
-module.exports = Match;
+module.exports = {
+  Match: Match,
+  FORMAT_ENUMS: FORMAT_ENUMS,
+  STATUS_ENUMS: STATUS_ENUMS,
+  GENDER_ENUMS: GENDER_ENUMS,
+};

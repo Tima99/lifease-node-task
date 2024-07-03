@@ -2,14 +2,15 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const matchSchema = new Schema({
-    teamId: {
-        type: mongoose.Schema.ObjectId
-    },
-    rank: Number,
-    competenceTeams: []
+const rivalrySchema = new Schema({
+  teamName: {
+    type: String,
+    index: true,
+  },
+  rank: Number,
+  competenceTeams: [],
 });
 
-const Match = mongoose.model("rivalry", matchSchema);
+const Rivalry = mongoose.model("rivalry", rivalrySchema);
 
-module.exports = Match;
+module.exports = Rivalry;
